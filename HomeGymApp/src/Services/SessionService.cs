@@ -49,20 +49,24 @@ namespace HomeGymApp.src.Services
                 return null;
             }
 
-            Session? activeSession = await sessionRepository.GetActiveSessionForPersonAsync(personId);
+            Session? currentSession = await sessionRepository.GetActiveSessionForPersonAsync(personId);
 
-            if (activeSession == null)
+            if (currentSession == null)
             {
                 //ToDo: Throw Errors
                 return null;
             }
 
-            activeSession.End();
+            currentSession.End();
 
-            await sessionRepository.UpdateAsync(activeSession);
+            await sessionRepository.UpdateAsync(currentSession);
             await sessionRepository.SaveChangesAsync();
 
-            return activeSession;
+            person.AddSession(currentSession);
+            await personRepository.UpdateAsync(person);
+            await sessionRepository.SaveChangesAsync();
+
+            return currentSession;
         }
 
         public async void RecordExercise(Guid personId, Exercise exercise)

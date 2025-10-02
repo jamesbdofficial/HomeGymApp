@@ -19,7 +19,6 @@ namespace HomeGymApp.src.Entities
             Id = Guid.NewGuid();
             Person = person;
             TimeEntered = timeEntered;
-            Exercises = new List<Exercise>();
             LastUpdated = DateTime.UtcNow;
         }
 
@@ -61,7 +60,7 @@ namespace HomeGymApp.src.Entities
         /// <summary>
         /// List of exercises the user recorded.
         /// </summary>
-        public List<Exercise> Exercises { get; set; }
+        public List<Exercise> Exercises { get; set; } = new List<Exercise>();
 
         public static Session Start(Person user)
         {
@@ -69,21 +68,20 @@ namespace HomeGymApp.src.Entities
             return session;
         }
 
-        public void AddExercise(Exercise exercise)
-        {
-            Exercises.Add(exercise);
-        }
-
         public void End()
         {
             TimeLeft = DateTime.Now;
             TimeInGym = CalculateTimeInGym(TimeEntered, TimeLeft.Value);
-            Person.AddSession(this);
         }
 
         private static TimeSpan CalculateTimeInGym([NotNull] DateTime timeEntered, [NotNull] DateTime timeLeft)
         {
             return timeLeft.Subtract(timeEntered);
+        }
+
+        public void AddExercise(Exercise exercise)
+        {
+            Exercises.Add(exercise);
         }
     }
 }
