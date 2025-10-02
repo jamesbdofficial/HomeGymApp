@@ -1,6 +1,4 @@
-﻿using HomeGymApp.src.Validation;
-
-namespace HomeGymApp.src.Entities
+﻿namespace HomeGymApp.src.Entities
 {
     /// <summary>
     /// Gym entity.
@@ -15,7 +13,7 @@ namespace HomeGymApp.src.Entities
         /// <param name="streetAddress">The street address of the gym.</param>
         /// <param name="city">The city the gym is in.</param>
         /// <param name="postCode">The postcode of the gym.</param>
-        protected Gym(string name, Guid ownerId, string streetAddress, string city, string postCode)
+        protected Gym(string name, Guid ownerId, string streetAddress, string city, string postCode, List<Equipment> equipment)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -23,12 +21,12 @@ namespace HomeGymApp.src.Entities
             StreetAddress = streetAddress;
             City = city;
             PostCode = postCode;
+            Equipment = equipment;
         }
 
-        public static Gym Create(string name, Guid ownerId, string streetAddress, string city, string postCode)
+        public static Gym Create(string name, Guid ownerId, string streetAddress, string city, string postCode, List<Equipment> equipment)
         {
-            EntityValidation.EmptyGuidValidation(ownerId, "Owner Id");
-            Gym newGym = new Gym(name, ownerId, streetAddress, city, postCode);
+            Gym newGym = new Gym(name, ownerId, streetAddress, city, postCode, equipment);
             return newGym;
         }
 
@@ -37,6 +35,11 @@ namespace HomeGymApp.src.Entities
             StreetAddress = streetAddress;
             City = city;
             PostCode = postCode;
+        }
+
+        public void AddEquipment(Equipment newEquipment)
+        {
+            Equipment.Append(newEquipment);
         }
 
         /// <summary>
@@ -68,5 +71,10 @@ namespace HomeGymApp.src.Entities
         /// The postcode of the gym.
         /// </summary>
         public string PostCode { get; private set; }
+
+        /// <summary>
+        /// The equipment the gym has.
+        /// </summary>
+        public IEnumerable<Equipment> Equipment { get; private set; }
     }
 }

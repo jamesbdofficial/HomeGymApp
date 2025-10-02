@@ -1,7 +1,7 @@
 ﻿using HomeGymApp.src.Entities;
 using System.Diagnostics.CodeAnalysis;
 
-namespace HomeGymApp.src.Models
+namespace HomeGymApp.src.Entities
 {
     /// <summary>
     /// The main session entity.
@@ -16,15 +16,22 @@ namespace HomeGymApp.src.Models
         /// <param name="timeEntered">The time the session started.</param>
         protected Session(Person person, DateTime timeEntered) 
         {
+            Id = Guid.NewGuid();
             Person = person;
             TimeEntered = timeEntered;
             Exercises = new List<Exercise>();
+            LastUpdated = DateTime.UtcNow;
         }
 
         /// <summary>
         /// The Id of the session.
         /// </summary>
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+        
+        /// <summary>
+        /// The Id of the session.
+        /// </summary>
+        public int SessionNumber { get; set; }
 
         /// <summary>
         /// The person recording the session.
@@ -39,12 +46,12 @@ namespace HomeGymApp.src.Models
         /// <summary>
         /// The date time the session ended.
         /// </summary>
-        public DateTime TimeLeft { get; set; }
+        public DateTime? TimeLeft { get; set; }
 
         /// <summary>
         /// Time spent in gym.
         /// </summary>
-        public TimeSpan TimeInGym { get; set; }
+        public TimeSpan? TimeInGym { get; set; }
 
         /// <summary>
         /// The time the session was last updated.
@@ -62,12 +69,16 @@ namespace HomeGymApp.src.Models
             return session;
         }
 
-        public void End(List<Exercise> exercises)
+        public void AddExercise(Exercise exercise)
         {
-            Exercises = exercises;
+            Exercises.Add(exercise);
+        }
+
+        public void End()
+        {
             TimeLeft = DateTime.Now;
-            TimeInGym = CalculateTimeInGym(TimeEntered, TimeLeft);
-            Person.AddSession();
+            TimeInGym = CalculateTimeInGym(TimeEntered, TimeLeft.Value);
+            Person.AddSession(this);
         }
 
         private static TimeSpan CalculateTimeInGym([NotNull] DateTime timeEntered, [NotNull] DateTime timeLeft)

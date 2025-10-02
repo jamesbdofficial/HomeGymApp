@@ -1,6 +1,6 @@
 ﻿using HomeGymApp.src.Constants;
 
-namespace HomeGymApp.src.Models
+namespace HomeGymApp.src.Entities
 {
     /// <summary>
     /// The main person entity.
@@ -18,7 +18,7 @@ namespace HomeGymApp.src.Models
             Id = Guid.NewGuid();
             Name = name;
             EmailAddress = emailAddress;
-            NumberOfSessions = 0;
+            Sessions = new List<Session>();
             LastUpdated = DateTime.Now;
             UserType = userType;
         }
@@ -28,9 +28,22 @@ namespace HomeGymApp.src.Models
             return new Person(name, emailAddress, userType);
         }
 
-        public void AddSession()
+        public void UpdateEmailAddress(string emailAddress)
         {
-            NumberOfSessions++;
+            EmailAddress = emailAddress;
+            LastUpdated = DateTime.Now;
+        }
+
+        public void AddSession(Session session)
+        {
+            Sessions.Append(session);
+            LastUpdated = DateTime.Now;
+        }
+
+        public void UpdateUserType(UserType userType)
+        {
+            UserType = userType;
+            LastUpdated = DateTime.Now;
         }
 
         /// <summary>
@@ -51,7 +64,7 @@ namespace HomeGymApp.src.Models
         /// <summary>
         /// Number of sessions the person has recorded.
         /// </summary>
-        public int NumberOfSessions { get; private set; }
+        public IList<Session> Sessions { get; private set; }
 
         /// <summary>
         /// The last time the entity was updated.

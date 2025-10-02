@@ -1,6 +1,4 @@
-﻿using HomeGymApp.src.Models;
-
-namespace HomeGymApp.src.Entities
+﻿namespace HomeGymApp.src.Entities
 {
     /// <summary>
     /// Work item entity - used to track any work or changes done to the gym.
