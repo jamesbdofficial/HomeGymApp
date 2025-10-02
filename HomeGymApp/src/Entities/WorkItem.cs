@@ -57,7 +57,7 @@
 
         public void CompleteWork(DateTime? completedDateTime, Person completedBy)
         {
-            CompletedDateTime = completedDateTime != null ? completedDateTime : DateTime.Now;
+            CompletedDateTime = completedDateTime != null ? completedDateTime : DateTime.UtcNow;
             CompletedBy = completedBy;
         }
     }

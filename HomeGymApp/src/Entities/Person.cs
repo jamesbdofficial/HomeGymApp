@@ -19,7 +19,7 @@ namespace HomeGymApp.src.Entities
             Name = name;
             EmailAddress = emailAddress;
             Sessions = new List<Session>();
-            LastUpdated = DateTime.Now;
+            LastUpdated = DateTime.UtcNow;
             UserType = userType;
         }
 
@@ -31,19 +31,19 @@ namespace HomeGymApp.src.Entities
         public void UpdateEmailAddress(string emailAddress)
         {
             EmailAddress = emailAddress;
-            LastUpdated = DateTime.Now;
+            LastUpdated = DateTime.UtcNow;
         }
 
         public void AddSession(Session session)
         {
             Sessions.Append(session);
-            LastUpdated = DateTime.Now;
+            LastUpdated = DateTime.UtcNow;
         }
 
         public void UpdateUserType(UserType userType)
         {
             UserType = userType;
-            LastUpdated = DateTime.Now;
+            LastUpdated = DateTime.UtcNow;
         }
 
         /// <summary>

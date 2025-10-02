@@ -22,7 +22,7 @@ namespace HomeGymApp.src.Repositories
         {
             return await dbSet
                 .Include(x => x.Person)
-                .Include(x => x.Exercises)
+                .Include(x => x.ExercisePerformances)
                 .Where(x => x.Person.Id == personId)
                 .ToListAsync();
         }
@@ -32,7 +32,7 @@ namespace HomeGymApp.src.Repositories
         {
             return await dbSet
                 .Include(x => x.Person)
-                .Include(x => x.Exercises)
+                .Include(x => x.ExercisePerformances)
                 .FirstOrDefaultAsync(x => x.Person.Id == personId && x.TimeLeft == null);
         }
 

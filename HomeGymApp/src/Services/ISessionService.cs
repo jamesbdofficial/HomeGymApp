@@ -8,6 +8,6 @@ namespace HomeGymApp.src.Services
 
         Task<Session?> End(Guid personId);
 
-        void RecordExercise(Guid personId, Exercise exercise);
+        void RecordExercise(Guid personId, ExercisePerformance exercisePerformance);
     }
 }

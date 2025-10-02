@@ -26,13 +26,36 @@ namespace HomeGymApp.src.Data
                 .HasKey(p => p.Id);
 
             modelBuilder.Entity<Session>()
-                .HasKey(p => p.Id);
+                .HasKey(s => s.Id);
 
             modelBuilder.Entity<Exercise>()
-                .HasKey(p => p.Name);
+                .HasKey(e => e.Name);
+
+            modelBuilder.Entity<ExercisePerformance>()
+                .HasKey(ep => ep.Id);
+
+            modelBuilder.Entity<ExerciseSet>()
+                .HasKey(es => es.Id);
 
             modelBuilder.Entity<WorkItem>()
-                .HasKey(p => p.Id);
+                .HasKey(w => w.Id);
+
+            // Relationships
+            modelBuilder.Entity<ExercisePerformance>()
+                .HasOne(ep => ep.Exercise)
+                .WithMany()
+                .HasForeignKey(ep => ep.ExerciseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ExercisePerformance>()
+                .HasMany(ep => ep.Sets)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Session>()
+                .HasMany(s => s.ExercisePerformances)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

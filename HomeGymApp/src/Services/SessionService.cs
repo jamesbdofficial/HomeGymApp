@@ -69,7 +69,7 @@ namespace HomeGymApp.src.Services
             return currentSession;
         }
 
-        public async void RecordExercise(Guid personId, Exercise exercise)
+        public async void RecordExercise(Guid personId, ExercisePerformance exercisePerformance)
         {
             Person? person = await personRepository.GetByIdAsync(personId);
 
@@ -87,7 +87,7 @@ namespace HomeGymApp.src.Services
                 return;
             }
 
-            activeSession.AddExercise(exercise);
+            activeSession.AddExercise(exercisePerformance);
 
             await sessionRepository.UpdateAsync(activeSession);
             await sessionRepository.SaveChangesAsync();
