@@ -23,7 +23,7 @@ namespace HomeGymApp.src.Repositories
             return await dbSet
                 .Include(x => x.Person)
                 .Include(x => x.Exercises)
-                .Where(x => x.Id == personId)
+                .Where(x => x.Person.Id == personId)
                 .ToListAsync();
         }
 
